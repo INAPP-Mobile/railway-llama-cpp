@@ -57,18 +57,37 @@ After deploying, you need to add GGUF model files to the mounted volume:
 
 | Variable      | Default                                | Description |
 |--------------|----------------------------------------|-------------|
-| `MODEL_PATH` | `/opt/models/.cache/huggingface` | Directory where GGUF files are loaded from (Railway volume mount) |
-| `DEFAULT_MODEL` | _(empty)_ | Optional specific model filename to load by default |
-| `N_THREADS` | `4` | CPU threads for inference (adjust for your CPU) |
-| `N_CTX` | `4096` | Context window size in tokens (higher = more memory) |
+| `MODEL_PATH` | `/opt/models/.cache/huggingface`       | Directory where GGUF files are loaded from (Railway volume mount) |
+| `DEFAULT_MODEL` | _(empty)_                          | Optional specific model filename to load by default |
+| `N_THREADS`   | `4` | CPU threads for inference (adjust for your CPU) |
+| `N_CTX`       | `4096` | Context window size in tokens (higher = more memory) |
+| `MODEL_REPO_ID` | _(empty)_ | Hugging Face repo with GGUF models to auto-download on startup (requires HF token if private repo; use secret store env var). Example: `unsloth/Meta-Llama-3.1-8B-Instruct-GGUF` |
 
 ## Getting Started
 
 1. Click the **Deploy on Railway** button above
 2. Wait for the build to complete (usually < 2 minutes)
-3. Upload a GGUF model to the mounted volume at `/opt/models/.cache/huggingface`
-4. Test the endpoint: `curl http://<railway-domain>/v1/completions -d '{"model":"default","prompt":"Hello","max_tokens":50}'`
-5. Hit `/health` — returns `200 OK` once the app is running
+3. Set environment variables (optional):
+   - `MODEL_REPO_ID`: Hugging Face repo containing GGUF models (e.g., `unsloth/Meta-Llama-3.1-8B-Instruct-GGUF`)  
+     The container will automatically download all `.gguf` files from this repo on first start if no existing GGUF files are found in the volume path.
+   - Optional: If using a private HF repo, set `HF_TOKEN` secret; the entrypoint script uses it to authenticate via `huggingface_hub.snapshot_download(...)`.
+4. Trigger a new deployment (or wait for auto-deploy from GitHub). The service will fetch models if configured.
+5. Test the endpoint: `curl http://<railway-domain>/v1/completions -d '{"model":"default","prompt":"Hello","max_tokens":50}'`
+6. Hit `/health` — returns `200 OK` once the app is running
+
+### How Hugging Face Hub Auto-download Works
+
+When you set `MODEL_REPO_ID`:
+
+- On startup, the entrypoint checks if any `.gguf` files exist in `${MODEL_PATH:-/opt/models/.cache/huggingface}`.
+- If none are found and `MODEL_REPO_ID` is set, it runs:
+  ```python
+  from huggingface_hub import snapshot_download
+  snapshot_download(repo_id=MODEL_REPO_ID, allow_patterns='*.gguf', local_dir=MODEL_PATH)
+  ```
+- Subsequent starts skip download because GGUF files are already present (unless you delete them).
+
+This lets you launch your model automatically without manually uploading files. If the model is public on Hugging Face Hub (like `unsloth/Meta-Llama-3.1-8B-Instruct-GGUF`), just set the repo ID; no token needed for public repos. For private repos, ensure you set a secret named `HF_TOKEN` in your Railway project settings.
 
 ## Connecting from Open WebUI
 
