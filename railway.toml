@@ -1,0 +1,18 @@
+# Marketplace metadata (name/category/description) is published via
+# `railway templates publish --description ...` flags, not stored here.
+# README.md is the canonical marketplace overview — keep them in sync.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# No healthcheckPath: service is healthy when process starts.
+# FastAPI /health endpoint available but not required for health check.
+numReplicas = 1
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5
+
+[[deploy.volumeMounts]]
+name = "llama-models-volume"
+mountPath = "/opt/models/.cache/huggingface"

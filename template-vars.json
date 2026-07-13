@@ -1,0 +1,22 @@
+{
+  "MODEL_PATH": {
+    "defaultValue": "/opt/models/.cache/huggingface",
+    "description": "Directory path where GGUF model files are mounted (Railway volume mount). Mount your models to this path via the volume settings.",
+    "isOptional": false
+  },
+  "DEFAULT_MODEL": {
+    "defaultValue": "",
+    "description": "Optional: Specific model filename to load by default (e.g., 'llama-2-7b.Q4_0.gguf'). Leave empty to auto-detect from mounted models.",
+    "isOptional": true
+  },
+  "N_THREADS": {
+    "defaultValue": "4",
+    "description": "Number of CPU threads to use for inference. Increase for multi-core CPUs. Set to 1 for single-threaded operation.",
+    "isOptional": true
+  },
+  "N_CTX": {
+    "defaultValue": "4096",
+    "description": "Context window size in tokens. Increase for longer conversations (e.g., 8192, 16384). Higher values use more memory.",
+    "isOptional": true
+  }
+}
