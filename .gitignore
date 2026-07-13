@@ -9,7 +9,6 @@ __pycache__/
 venv/
 
 # Docker
-Dockerfile
 .docker/
 
 # Build artifacts
