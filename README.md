@@ -44,11 +44,24 @@ If you already have a Railway volume with GGUF models, mount it at the same path
 
 ### Quick Test with the CLI
 
-A companion test script (`chat.py`, copied to `/app/chat.py` in the container) is included in this template for quick smoke tests:
+A companion test script (`chat.py`, copied to `/app/chat.py` in the container) is included in this template for quick smoke tests.
+
+**Which URL to use:**
+
+| Where `chat.py` runs | `--url` value | External URL needed? |
+|---------------------|-------------|----------------------|
+| Same container (Railway `service exec`) | `http://localhost:8000` (default) | No |
+| Local dev (server on your laptop) | `http://localhost:8000` (default) | No |
+| Another Railway service (same network) | `http://railway-llama-cpp.railway.internal:8000` | No (private DNS) |
+| Your laptop → deployed instance | `https://<your-service>.up.railway.app` | Yes |
 
 ```bash
-# Install dependencies (stdlib only — no pip needed)
-# Test against your deployed instance:
+# No --url needed when running on the same machine/container (defaults to localhost:8000):
+python chat.py
+python chat.py --list-models
+python chat.py --health
+
+# From your laptop against the deployed instance (needs public URL):
 python chat.py --url https://railway-llama-cpp-production.up.railway.app
 
 # List mounted models:
