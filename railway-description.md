@@ -25,7 +25,7 @@ LLaMA.cpp runs as a single Docker container using [llama-cpp-python](https://git
 - Paired with Open WebUI for a full self-hosted AI chat interface
 - Local GGUF model serving for development and prototyping
 
-## Dependencies
+## Dependencies for LLaMA.cpp
 
 ### Deployment Dependencies
 
