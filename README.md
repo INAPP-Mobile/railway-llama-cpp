@@ -46,6 +46,18 @@ If you already have a Railway volume with GGUF models, mount it at the same path
 
 A companion test script (`chat.py`, copied to `/app/chat.py` in the container) is included in this template for quick smoke tests.
 
+**Running with no arguments:** `python chat.py` (no flags) sends a single chat completion to `http://localhost:8000/v1/chat/completions` using the default greeting prompt (`"Hello! What can you do? Please respond in one short sentence."`), 256 max tokens, and temperature 0.7. It prints the model's reply and exits. This is the fastest smoke test when the server is running locally or in the same container. If the server isn't reachable, it prints an error like `[ERROR] Connection refused`.
+
+**Default flags (when omitted):**
+
+| Flag | Default |
+|------|---------|
+| `--url` | `http://localhost:8000` |
+| `--prompt` | `Hello! What can you do? Please respond in one short sentence.` |
+| `--system` | _(empty)_ |
+| `--max-tokens` | `256` |
+| `--temperature` | `0.7` |
+
 **Which URL to use:**
 
 | Where `chat.py` runs | `--url` value | External URL needed? |
