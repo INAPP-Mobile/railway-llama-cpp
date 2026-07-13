@@ -1,38 +1,38 @@
 # Deploy and Host
 
-Deploy a lightweight, OpenAI-compatible LLM inference server on Railway. Add GGUF-format models to a persistent volume and instantly serve requests via standard OpenAI API endpoints — no GPU required.
+Deploy a private, OpenAI-compatible LLM inference server on Railway in minutes. Drop GGUF-format models into a persistent volume and instantly serve chat completions, text completions, and embeddings through standard OpenAI API endpoints — no GPU, no API keys from third parties, no data leaving your infrastructure.
 
 ## About Hosting
 
-LLaMA.cpp runs as a single Docker container using [llama-cpp-python](https://github.com/abetlen/llama-cpp-python), optimized for Railway's Hobby tier with a ~50–200 MB baseline RAM footprint. Models are stored in a persistent Railway volume and load on first request. The server exposes OpenAI-compatible endpoints (`/v1/completions`, `/v1/chat/completions`, `/v1/models`) that work as a drop-in replacement for any OpenAI client.
+LLaMA.cpp runs as a single Docker container using [llama-cpp-python](https://github.com/abetlen/llama-cpp-python), optimized for Railway's Hobby tier with a ~50–200 MB baseline RAM footprint. Models live in a persistent Railway volume and load lazily on the first request, so builds stay fast and redeploys never re-download your weights. The server exposes OpenAI-compatible endpoints (`/v1/chat/completions`, `/v1/completions`, `/v1/models`, `/v1/embeddings`) that work as a drop-in backend for OpenAI SDKs, LangChain, and any ChatGPT-style UI.
 
 ## Why Deploy
 
-- **No GPU required** — runs entirely on CPU with multi-threaded inference
-- **OpenAI-compatible** — use any tool, library, or UI that speaks the OpenAI API format
-- **Privacy-first** — all inference stays on your infrastructure, no data leaves Railway
-- **Cost-effective** — Hobby tier handles small models (up to 7B parameters) comfortably
+- **No GPU required** — runs entirely on CPU with multi-threaded inference; optional CUDA/OpenCL/Vulkan for Pro tier
+- **OpenAI-compatible** — point any OpenAI client, SDK, or UI at your instance and it just works
+- **Privacy-first** — all inference stays in your Railway project; nothing is sent to external LLM providers
+- **Cost-effective** — Hobby tier handles small-to-mid models (up to ~7B params) comfortably
 - **Fast startup** — model loads on first request, not at build time; ~10–30 seconds to first token
-- **Small image** — ~300 MB image vs 2–5 GB for full Ollama images
-- **Hugging Face integration** — `huggingface_hub` pre-installed for one-command model downloads
+- **Small image** — ~300 MB vs 2–5 GB for full Ollama images
+- **Hugging Face integration** — `huggingface_hub` pre-installed; pull GGUF models with one `MODEL_REPO_ID` env var
 
 ## Common Use Cases
 
 - Private ChatGPT-like chat API for personal or team use
-- Backend LLM endpoint for AI-powered applications and workflows
-- Embedding generation service for RAG pipelines
-- Model evaluation and testing playground
-- Paired with Open WebUI for a complete self-hosted AI chat interface
-- Development and prototyping with local GGUF models
+- Backend LLM endpoint for AI-powered apps, bots, and workflows
+- Embedding generation for RAG pipelines and semantic search
+- Model evaluation and prompt-engineering playground
+- Paired with Open WebUI for a full self-hosted AI chat interface
+- Local GGUF model serving for development and prototyping
 
 ## Dependencies
 
 ### Deployment Dependencies
 
-- Railway account (free Hobby tier works for small models)
-- GGUF-format model files (download from Hugging Face Hub)
+- A Railway account (free Hobby tier works for small models)
+- GGUF-format model file(s) — download from Hugging Face Hub or mount an existing volume
 
 ### Optional Dependencies
 
-- (Optional) Hugging Face token (`HF_TOKEN`) for downloading from private repos
-- (Optional) Railway GPU plugin for CUDA-accelerated inference on Pro tier
+- `HF_TOKEN` — only needed to pull from **private** Hugging Face repos
+- Railway GPU plugin — for CUDA-accelerated inference on Pro tier
