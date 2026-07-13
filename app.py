@@ -76,13 +76,13 @@ def get_model():
     return model
 
 
-@app.get("/health")
+@fastapi_app.get("/health")
 async def health():
     """Health check endpoint."""
     return {"status": "healthy", "model_loaded": model is not None}
 
 
-@app.get("/")
+@fastapi_app.get("/")
 async def root():
     """Root endpoint with basic info."""
     return {
@@ -92,7 +92,7 @@ async def root():
     }
 
 
-@app.get("/v1/models")
+@fastapi_app.get("/v1/models")
 async def list_models():
     """List available models (from mounted GGUF files)."""
     model_path = os.getenv("MODEL_PATH", "/opt/models/.cache/huggingface")
@@ -107,7 +107,7 @@ async def list_models():
     return {"object": "list", "data": models}
 
 
-@app.post("/v1/completions")
+@fastapi_app.post("/v1/completions")
 async def completions(request: CompletionRequest):
     """OpenAI-compatible completions endpoint."""
     try:
@@ -149,7 +149,7 @@ async def completions(request: CompletionRequest):
     }
 
 
-@app.post("/v1/chat/completions")
+@fastapi_app.post("/v1/chat/completions")
 async def chat_completions(request: dict):
     """OpenAI-compatible chat completions endpoint."""
     # Convert chat format to prompt
@@ -194,4 +194,4 @@ async def chat_completions(request: dict):
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(fastapi_app, host="0.0.0.0", port=port)
