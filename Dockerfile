@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install llama-cpp-python with OpenBLAS backend for CPU optimization
 # CUDA support: set LLAMA_CUDA=1 environment variable before pip install
-RUN pip install --no-cache-dir llama-cpp-python fastapi uvicorn
+RUN pip install --no-cache-dir llama-cpp-python fastapi uvicorn huggingface_hub
 
 # Create model storage directory
 RUN mkdir -p /opt/models/.cache/huggingface
