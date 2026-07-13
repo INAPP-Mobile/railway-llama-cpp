@@ -1,0 +1,23 @@
+{
+  "templateId": "0def174e-8e09-40fa-b0e2-581830e8ea0e",
+  "code": "lR5GrQ",
+  "name": "LLaMA.cpp",
+  "status": "UNPUBLISHED",
+  "iconUrl": "https://raw.githubusercontent.com/INAPP-Mobile/railway-llama-cpp/master/template-icon.svg",
+  "ogImageUrl": "https://raw.githubusercontent.com/INAPP-Mobile/railway-llama-cpp/master/og-image.svg",
+  "editorUrl": "https://railway.com/workspace/templates/0def174e-8e09-40fa-b0e2-581830e8ea0e",
+  "workspaceId": "b82233e8-ff27-4ca9-9a30-a7411337a2d9",
+  "createdAt": "2026-07-13T12:27:56-07:00",
+  "projectId": "f6ac9cac-7456-4977-98db-0f5d57e56eba",
+  "projectName": "LLaMA.cpp",
+  "targetName": "LLaMA.cpp",
+  "targetDescription": "Lightweight OpenAI-compatible LLM inference server. Add GGUF models, get a private ChatGPT-like API. Pairs with Open WebUI.",
+  "targetCategory": "AI/ML",
+  "notes": "Icon served from standalone public repo INAPP-Mobile/railway-llama-cpp (railway-templates is a private repo, raw.githubusercontent.com can't serve from it). Variable defaults in template-editor-raw.json must be pasted into the service Raw JSON editor before publishing.",
+  "publishCommand": "bash scripts/railway.sh templates publish lR5GrQ --category \"AI/ML\" --description \"Lightweight OpenAI-compatible LLM inference server. Add GGUF models, get a private ChatGPT-like API. Pairs with Open WebUI.\" --image \"https://raw.githubusercontent.com/INAPP-Mobile/railway-llama-cpp/master/template-icon.svg\" --readme-file README.md",
+  "dashboardSteps": [
+    "Open editor: https://railway.com/workspace/templates/0def174e-8e09-40fa-b0e2-581830e8ea0e",
+    "Paste template-editor-raw.json into the service's Raw JSON editor (sets variable defaults)",
+    "Publish via CLI with the publishCommand above (--image sets icon URL at publish time)"
+  ]
+}

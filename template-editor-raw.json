@@ -14,5 +14,13 @@
   "N_CTX": {
     "value": "4096",
     "description": "Context window size in tokens. Increase for longer conversations (e.g., 8192, 16384). Higher values use more memory."
+  },
+  "MODEL_REPO_ID": {
+    "value": "",
+    "description": "Hugging Face repo with GGUF models to auto-download on startup (requires HF_TOKEN if private repo). Example: unsloth/Meta-Llama-3.1-8B-Instruct-GGUF"
+  },
+  "HF_TOKEN": {
+    "value": "",
+    "description": "Hugging Face access token for downloading from private repos. Not needed for public models. Use Railway secret store for this value."
   }
 }

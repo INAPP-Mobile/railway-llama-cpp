@@ -18,5 +18,15 @@
     "defaultValue": "4096",
     "description": "Context window size in tokens. Increase for longer conversations (e.g., 8192, 16384). Higher values use more memory.",
     "isOptional": true
+  },
+  "MODEL_REPO_ID": {
+    "defaultValue": "",
+    "description": "Hugging Face repo with GGUF models to auto-download on startup (requires HF_TOKEN if private repo). Example: unsloth/Meta-Llama-3.1-8B-Instruct-GGUF",
+    "isOptional": true
+  },
+  "HF_TOKEN": {
+    "defaultValue": "",
+    "description": "Hugging Face access token for downloading from private repos. Not needed for public models. Use Railway secret store for this value.",
+    "isOptional": true
   }
 }
