@@ -10,6 +10,8 @@ mkdir -p "$MODEL_PATH"
 
 # Export MODEL_PATH after ensuring directory exists
 export MODEL_PATH
+export HUGGING_FACE_HUB_CACHE=/opt/models/.cache/huggingface
+export TRANSFORMERS_CACHE=/opt/models/.cache/huggingface/transformers
 
 # Make volume writable for the app if needed
 if [ ! -w "$MODEL_PATH" ]; then
