@@ -18,6 +18,7 @@ WORKDIR /app
 
 # Copy the FastAPI application
 COPY --chmod=755 app.py /app/app.py
+COPY --chmod=755 chat.py /app/chat.py
 COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 # Switch to root for volume permission handling

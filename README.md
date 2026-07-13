@@ -44,7 +44,7 @@ If you already have a Railway volume with GGUF models, mount it at the same path
 
 ### Quick Test with the CLI
 
-A companion test script is included in this template for quick smoke tests:
+A companion test script (`chat.py`, copied to `/app/chat.py` in the container) is included in this template for quick smoke tests:
 
 ```bash
 # Install dependencies (stdlib only — no pip needed)
