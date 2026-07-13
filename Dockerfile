@@ -28,10 +28,14 @@ USER root
 # Expose port
 EXPOSE 8000
 
-# Set environment defaults
+# Set environment defaults (these are inherited by all processes in the container)
 ENV PORT=8000
 ENV MODEL_PATH=/opt/models/.cache/huggingface
 
+# Hugging Face CLI cache paths - ensure models persist in volume
+ENV HUGGING_FACE_HUB_CACHE=/opt/models/.cache/huggingface
+ENV TRANSFORMERS_CACHE=/opt/models/.cache/huggingface/transformers
+
 # Start server - PORT env var injected by Railway, default 8000
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["uvicorn", "app:fastapi_app", "--host", "0.0.0.0", "--port", "8000"]
+CMD [ "uvicorn", "app:fastapi_app", "--host", "0.0.0.0", "--port", "8000" ]
