@@ -1,13 +1,12 @@
 # syntax=docker/dockerfile:1
 FROM python:3.11-slim
 
-# Install build dependencies for llama-cpp-python (optional CUDA support via env)
+# Install build dependencies for llama-cpp-python
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git cmake build-essential libcurl4-openssl-dev libssl-dev && \
     rm -rf /var/lib/apt/lists/*
 
 # Install llama-cpp-python with OpenBLAS backend for CPU optimization
-# CUDA support: set LLAMA_CUDA=1 environment variable before pip install
 RUN pip install --no-cache-dir llama-cpp-python fastapi uvicorn huggingface_hub
 
 # Create model storage directory

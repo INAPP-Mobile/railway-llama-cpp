@@ -9,7 +9,7 @@ A lightweight, OpenAI-compatible LLM inference server powered by [llama-cpp-pyth
 - **Minimal resource usage** — ~50–200 MB baseline RAM, runs comfortably on Railway's Hobby tier
 - **OpenAI-compatible API** — Drop-in replacement for `/v1/completions`, `/v1/chat/completions`, and `/v1/models`
 - **GGUF model support** — Load any GGUF-quantized model: Llama, Mistral, Phi, Qwen, DeepSeek, and hundreds more from Hugging Face
-- **CPU-optimized** — Multi-threaded inference out of the box; optional CUDA/OpenCL/Vulkan support for Pro tier
+- **CPU-optimized** — Multi-threaded inference out of the box (Railway has no GPU instances, so this is pure CPU)
 - **Small image** — ~300 MB (Python + compiled binary) vs 500 MB+ for full LM Studio images
 - **On-demand model loading** — Models load on first request, not at build time
 - **Persistent model storage** — Railway volume keeps your models across redeploys
@@ -161,7 +161,7 @@ This server works as a drop-in OpenAI endpoint for any OpenAI-compatible fronten
 |--|--------------------------|--------|
 | **Image size** | ~300 MB | ~2–5 GB (model images) |
 | **RAM baseline** | ~50 MB | ~200 MB+ |
-| **GPU required** | No (CPU-optimized) | Yes (GPU strongly recommended) |
+| **GPU required** | No (Railway has no GPU) | Yes (GPU strongly recommended) |
 | **Model format** | GGUF (download once) | GGUF + Ollama manifest (modelfile) |
 | **API** | OpenAI-compatible natively | Requires proxy layer |
 | **Startup time** | ~10–30 seconds | ~2–5 minutes (model pull) |

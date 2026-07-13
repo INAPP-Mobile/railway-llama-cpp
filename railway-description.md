@@ -8,7 +8,7 @@ LLaMA.cpp runs as a single Docker container using [llama-cpp-python](https://git
 
 ## Why Deploy
 
-- **No GPU required** — runs entirely on CPU with multi-threaded inference; optional CUDA/OpenCL/Vulkan for Pro tier
+- **No GPU required** — runs entirely on CPU with multi-threaded inference (Railway has no GPU instances)
 - **OpenAI-compatible** — point any OpenAI client, SDK, or UI at your instance and it just works
 - **Privacy-first** — all inference stays in your Railway project; nothing is sent to external LLM providers
 - **Cost-effective** — Hobby tier handles small-to-mid models (up to ~7B params) comfortably
@@ -35,4 +35,3 @@ LLaMA.cpp runs as a single Docker container using [llama-cpp-python](https://git
 ### Optional Dependencies
 
 - `HF_TOKEN` — only needed to pull from **private** Hugging Face repos
-- Railway GPU plugin — for CUDA-accelerated inference on Pro tier
