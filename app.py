@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from typing import Optional, List
 import llama_cpp
 
-app = FastAPI(title="llama.cpp Inference Server", version="1.0.0")
+fastapi_app = FastAPI(title="llama.cpp Inference Server", version="1.0.0")
 
 # Global model state
 model = None
