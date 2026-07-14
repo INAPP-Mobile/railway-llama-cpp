@@ -34,6 +34,9 @@ Upload `.gguf` files to the mounted volume at `/opt/models/.cache/huggingface` u
 **Option C — Existing volume:**
 If you already have a Railway volume with GGUF models, mount it at the same path.
 
+**Option D — Download via `hf` CLI:**
+Use the new Hugging Face CLI (`hf`) to pull specific GGUF files into the volume. No login needed for public repos. See [Downloading Models with `hf` CLI](#downloading-models-with-hf-cli) below.
+
 **Recommended starter models:**
 | Model | Size | Notes |
 |-------|------|-------|
@@ -119,11 +122,43 @@ curl https://<your-service-url>/v1/chat/completions \
 | `MODEL_REPO_ID` | _(empty)_ | No | Hugging Face repo ID for auto-downloading GGUF models on startup. Example: `unsloth/Meta-Llama-3.1-8B-Instruct-GGUF` |
 | `HF_TOKEN` | _(empty)_ | No | Hugging Face access token for downloading from **private** repos. Use Railway's secret store for this value |
 
+### Downloading Models with `hf` CLI
+
+The container includes the new Hugging Face CLI (`hf`) for downloading models directly into the persistent volume. No login required for public repos.
+
+```bash
+# Download a specific GGUF file from a repo
+hf download unsloth/Meta-Llama-3.1-8B-Instruct-GGUF \
+  Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf \
+  --local-dir /opt/models/.cache/huggingface
+
+# Download a smaller, faster model
+hf download bartowski/Llama-3.2-3B-Instruct-GGUF \
+  Llama-3.2-3B-Instruct-Q4_K_M.gguf \
+  --local-dir /opt/models/.cache/huggingface
+
+# List downloaded models
+ls -lh /opt/models/.cache/huggingface/*.gguf
+```
+
+Hf Xet handles chunked downloads and caching automatically. No symlinks or flags to worry about.
+
+You can also run this in a Railway **Service Exec** session after deploy:
+
+```bash
+railway service exec
+hf download bartowski/Llama-3.2-3B-Instruct-GGUF \
+  Llama-3.2-3B-Instruct-Q4_K_M.gguf \
+  --local-dir /opt/models/.cache/huggingface
+
+ls -lh /opt/models/.cache/huggingface/*.gguf
+```
+
 ## Pairing with Open WebUI
 
 This server works as a drop-in OpenAI endpoint for any OpenAI-compatible frontend:
 
-1. Deploy [Open WebUI](https://railway.com/new/template/open-webui) on Railway
+1. Deploy [Open WebUI](https://railway.com/new/template/open-webui-3) on Railway
 2. In Open WebUI admin settings, add a new OpenAI connection:
    - **URL:** `http://llama-cpp.railway.internal:8000/v1`
    - **API Key:** leave blank (or any placeholder)
