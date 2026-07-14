@@ -1,6 +1,6 @@
 # LLaMA.cpp Inference Server — Railway Template
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/new/template/lR5GrQ)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/deploy/llamacpp-1)
 
 A lightweight, OpenAI-compatible LLM inference server powered by [llama-cpp-python](https://github.com/abetlen/llama-cpp-python). Drop GGUF-format models into a persistent volume and instantly serve requests via standard OpenAI API endpoints — no GPU required.
 
