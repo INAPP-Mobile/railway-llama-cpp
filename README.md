@@ -68,7 +68,7 @@ A companion test script (`chat.py`, copied to `/app/chat.py` in the container) i
 | Same container (Railway `service exec`) | `http://localhost:8000` (default) | No |
 | Local dev (server on your laptop) | `http://localhost:8000` (default) | No |
 | Another Railway service (same network) | `http://railway-llama-cpp.railway.internal:8000` | No (private DNS) |
-| Your laptop → deployed instance | `https://<your-service>.up.railway.app` | Yes |
+| Your laptop → deployed instance | `https://{your-service}.up.railway.app` | Yes |
 
 ```bash
 # No --url needed when running on the same machine/container (defaults to localhost:8000):
@@ -98,15 +98,15 @@ python chat.py --url https://railway-llama-cpp-production.up.railway.app --healt
 
 ```bash
 # Health check
-curl https://<your-service-url>/health
+curl https://{your-service-url}/health
 
 # Text completion
-curl https://<your-service-url>/v1/completions \
+curl https://{your-service-url}/v1/completions \
   -H "Content-Type: application/json" \
   -d '{"model":"default","prompt":"Hello! What can you do?","max_tokens":100}'
 
 # Chat completion
-curl https://<your-service-url>/v1/chat/completions \
+curl https://{your-service-url}/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{"model":"default","messages":[{"role":"user","content":"Tell me a short joke"}],"max_tokens":100}'
 ```
